@@ -33,31 +33,25 @@ HitRecord* Plane::intersect(Ray* ray) {
     return new HitRecord();
   }
 
+  // assumption: point is zero and then we shift by distance
   float t = -(normal->dot(ray->origin) + distance) / cosTheta;
-  if (t <= 0) {
+  if (t < 0) {
     return new HitRecord();
   }
 
-  Point3f* intersectionPosition = new Point3f(ray->direction);
-  intersectionPosition->scale(t);
-  intersectionPosition->add(ray->origin);
+  auto intersectionPosition = ray->pointAt(t);
+  auto wIn = Point3f().incidentDirection(ray->direction);
 
-  Point3f* wIn = new Point3f(ray->direction);
-  wIn->negate();
-  wIn->normalize();
-
-  // do something more
-
-  Point3f* hitNormal = new Point3f(normal);
-  Point3f* tangent = Point3f(1, 0, 0).cross(hitNormal);
+  auto hitNormal = new Point3f(normal);
+  auto tangent = Point3f(1, 0, 0).cross(hitNormal);
 
   return new HitRecord(
-      t,
-      intersectionPosition,
-      hitNormal,
-      tangent,
-      wIn,
-      material,
-      this
+    t,
+    intersectionPosition,
+    hitNormal,
+    tangent,
+    wIn,
+    material,
+    this
   );
 }
