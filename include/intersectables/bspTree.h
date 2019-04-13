@@ -19,6 +19,6 @@ class BspTree : public Intersectable {
  public:
   BspTree(const Intersectable&);
   HitRecord* intersect(const Ray& ray) const;
-  BoundingBox getBoundingBox() const;
+  const BoundingBox& getBoundingBox() const;
 };
 #endif

@@ -20,7 +20,7 @@ class IntersectableList : public Intersectable {
  public:
   IntersectableList();
   HitRecord* intersect(const Ray&) const;
-  BoundingBox getBoundingBox() const;
+  const BoundingBox& getBoundingBox() const;
 
   void put(Intersectable*);
 };

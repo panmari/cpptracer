@@ -45,9 +45,9 @@ class Instance : public Intersectable {
   ~Instance();
 
   HitRecord* intersect(const Ray& ray) const;
-  BoundingBox getBoundingBox() const {
-    auto aabb = intersectable->getBoundingBox();
-    return aabb.transform(*transformation);
-  }
+  const BoundingBox& getBoundingBox() const;
+
+ private:
+  BoundingBox bounding_box;
 };
 #endif

@@ -4,15 +4,20 @@
 #include "math/vector4f.h"
 
 Instance::Instance(Intersectable* intersectable)
-    : intersectable(intersectable), transformation(Matrix4f().eye()) {
+    : intersectable(intersectable),
+      transformation(Matrix4f().eye()),
+      bounding_box(intersectable->getBoundingBox()) {
   this->invTransformation = Matrix4f().eye();
   this->invTrasnposedTransformation = Matrix4f().eye();
 }
 
 Instance::Instance(Intersectable* intersectable, Matrix4f* transformation)
-    : intersectable(intersectable), transformation(transformation) {
+    : intersectable(intersectable),
+      transformation(transformation),
+      bounding_box(intersectable->getBoundingBox()) {
   this->invTransformation = transformation->inv();
   this->invTrasnposedTransformation = invTransformation->transposed();
+  this->bounding_box.transform(*transformation);
 }
 
 Instance::~Instance() {
